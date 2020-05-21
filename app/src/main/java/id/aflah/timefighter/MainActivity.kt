@@ -8,6 +8,7 @@ import android.os.CountDownTimer
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
@@ -37,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate calle. Score is: $score ")
 
         btnTapMe.setOnClickListener {
+            val bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce)
+            it.startAnimation(bounceAnimation)
             incrementScore()
         }
 
@@ -76,6 +79,9 @@ class MainActivity : AppCompatActivity() {
 
         val newScore = getString(R.string.yourScore, score)
         tvGameScore.text = newScore
+
+        val blinkAnimation = AnimationUtils.loadAnimation(this, R.anim.blink)
+        tvGameScore.startAnimation(blinkAnimation)
     }
 
     private fun endedGame () {
