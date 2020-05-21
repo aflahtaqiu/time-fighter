@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private var timeLeft = 10_000L
 
     companion object {
+        private val TAG = MainActivity::class.java.simpleName
         private val SCORE_KEY = "SCORE"
         private val TIME_LEFT_KEY = "TIME_LEFT"
     }
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        Log.d(TAG, "onCreate calle. Score is: $score ")
 
         btnTapMe.setOnClickListener {
             incrementScore()
@@ -48,12 +51,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e(TAG, "onDestroy called")
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
         outState.putInt(SCORE_KEY, score)
         outState.putLong(TIME_LEFT_KEY, timeLeft)
         countDownTimer.cancel()
+
+        Log.d(TAG, "onSaveInstanceState: Saving score $score & time left $timeLeft")
     }
 
     private fun incrementScore () {
