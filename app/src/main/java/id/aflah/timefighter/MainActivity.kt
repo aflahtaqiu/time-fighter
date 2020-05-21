@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             incrementScore()
         }
 
-        tvGameScore.text = "Your score: $score"
+        tvGameScore.text = getString(R.string.yourScore, score)
 
         if (savedInstanceState != null) {
             score = savedInstanceState.getInt(SCORE_KEY)
@@ -64,21 +64,21 @@ class MainActivity : AppCompatActivity() {
 
         score++
 
-        val yourNewScore = "Your New Score is $score"
-        tvGameScore.text = yourNewScore
+        val newScore = getString(R.string.yourScore, score)
+        tvGameScore.text = newScore
     }
 
     private fun endedGame () {
-        Toast.makeText(this, "Time is up, your score is $score", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.messageTimeUp, score), Toast.LENGTH_SHORT).show()
         resetGame()
     }
 
     private fun resetGame() {
         score = 0
-        tvGameScore.text = "Your score is $score"
+        tvGameScore.text = getString(R.string.yourScore, score)
 
         val initTimeLeft = initCountDownTime / 1000
-        tvTimeLeft.text = "Time left: $initTimeLeft"
+        tvTimeLeft.text = getString(R.string.timeLeft, initTimeLeft)
 
         countDownTimer = object : CountDownTimer(initCountDownTime, countDownInterval) {
             override fun onFinish() {
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
             override fun onTick(p0: Long) {
                 timeLeft = p0
                 val timeleft = p0 / 1000
-                tvTimeLeft.text = "Time left: $timeleft"
+                tvTimeLeft.text = getString(R.string.timeLeft, timeleft)
             }
         }
 
@@ -96,10 +96,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun restoreGame () {
-        tvGameScore.text = "Your score: $score"
+        tvGameScore.text = getString(R.string.yourScore, score)
 
         val restoredTime = timeLeft / 1000
-        tvTimeLeft.text = "Time left: $restoredTime"
+        tvTimeLeft.text = getString(R.string.timeLeft, restoredTime)
 
         countDownTimer = object : CountDownTimer(initCountDownTime, countDownInterval) {
             override fun onFinish() {
@@ -108,8 +108,8 @@ class MainActivity : AppCompatActivity() {
 
             override fun onTick(p0: Long) {
                 timeLeft = p0
-                val timeleft = p0 / 1000
-                tvTimeLeft.text = "Time left: $timeleft"
+                val newTimeLeft = p0 / 1000
+                tvTimeLeft.text = getString(R.string.timeLeft, newTimeLeft)
             }
         }
     }
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         super.onOptionsItemSelected(item)
         if (item.itemId == R.id.menu_info) {
-            showInfoMessage("Time Fighter App", "Created by Aflahtaqiu")
+            showInfoMessage(getString(R.string.infoTitle), getString(R.string.infoMessage))
         }
         return true
     }
